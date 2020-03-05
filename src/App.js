@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Papa from "papaparse";
 import Applicant from "./components/Applicant";
+import Titles from "./components/Titles"
 
 class App extends React.Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class App extends React.Component {
           onClickHandler={this.dataHandler}
           fileUploadHandler={this.fileUploadHandler}
         />
-        {this.state.loaded? this.state.data.map(data => <Applicant data={data}/>): null}
+        <div className='row'>{this.state.loaded ? <Titles data={this.state.headers}/> : null}</div>
         <Footer />
       </div>
     );

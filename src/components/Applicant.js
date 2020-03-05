@@ -1,7 +1,18 @@
 import React from "react";
+import {Table} from "reactstrap";
 
 const Applicant = (props) => {
-return <h5>{console.log(props.data)}</h5>
+return (
+    <Table>
+        <thead>
+            <tr>
+                {props.headers.map(header=>{
+                    return(<th>{header}</th>)
+                })}
+            </tr>
+        </thead>
+    </Table>
+)
 };
 
 export default Applicant;
