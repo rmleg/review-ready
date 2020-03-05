@@ -5,7 +5,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Papa from "papaparse";
 import Applicant from "./components/Applicant";
-import Titles from "./components/Titles"
+import Titles from "./components/Titles";
+import SelectColumns from "./components/SelectColumns";
 
 class App extends React.Component {
   constructor(props) {
@@ -44,12 +45,12 @@ class App extends React.Component {
   csvToJSON = () => {
     const config = {
       complete: results => {
-        this.setState({headers:results.data[0]})
+        this.setState({ headers: results.data[0] });
         let userData = [];
         results.data.forEach(data => {
-          userData.push(data)
+          userData.push(data);
         });
-        this.setState({data:userData, loaded: true})
+        this.setState({ data: userData, loaded: true });
       },
       header: false
     };
@@ -60,12 +61,21 @@ class App extends React.Component {
     return (
       <div className="App container">
         <Header />
-        {this.state.error ? <p>Upload a valid CSV file.</p> : null}
+        {this.state.error ? (
+          <span className="alert-danger">Upload a valid CSV file.</span>
+        ) : null}
         <FileUpload
           onClickHandler={this.dataHandler}
           fileUploadHandler={this.fileUploadHandler}
         />
-        <div className='row'>{this.state.loaded ? <Titles data={this.state.headers}/> : null}</div>
+        <div className="row">
+          {this.state.loaded ? (
+            <SelectColumns
+              headers={this.state.headers}
+              data={this.state.data[1]}
+            />
+          ) : null}
+        </div>
         <Footer />
       </div>
     );
