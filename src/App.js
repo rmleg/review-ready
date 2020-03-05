@@ -12,7 +12,7 @@ class App extends React.Component {
       data: false,
       headers: false,
       uploadedFile: false,
-      error: false,
+      error: false
     };
   }
 
@@ -42,14 +42,14 @@ class App extends React.Component {
     //console.log(this.state.uploadedFile);
     const config = {
       complete: results => {
-        this.setState({headers:results.meta.fields})
+        this.setState({ headers: results.meta.fields });
         const userData = [];
         results.data.forEach(data => {
-          userData.push(data)
-          this.setState({data:userData})
+          userData.push(data);
+          this.setState({ data: userData });
         });
-        console.log(userData)
-        console.log(results)
+        console.log(userData);
+        console.log(results);
       },
       header: true
     };
@@ -58,7 +58,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         <Header />
         {this.state.error ? <p>Upload a valid CSV file.</p> : null}
         <FileUpload
