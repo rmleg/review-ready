@@ -4,6 +4,8 @@ import "./App.scss";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Papa from "papaparse";
+import Applicant from "./components/Applicant";
+import Titles from "./components/Titles"
 
 class App extends React.Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class App extends React.Component {
     this.state = {
       data: false,
       headers: false,
+      loaded: false,
       uploadedFile: false,
       error: false
     };
@@ -39,19 +42,16 @@ class App extends React.Component {
   };
 
   csvToJSON = () => {
-    //console.log(this.state.uploadedFile);
     const config = {
       complete: results => {
-        this.setState({ headers: results.meta.fields });
-        const userData = [];
+        this.setState({headers:results.data[0]})
+        let userData = [];
         results.data.forEach(data => {
-          userData.push(data);
-          this.setState({ data: userData });
+          userData.push(data)
         });
-        console.log(userData);
-        console.log(results);
+        this.setState({data:userData, loaded: true})
       },
-      header: true
+      header: false
     };
     Papa.parse(this.state.uploadedFile, config);
   };
@@ -65,6 +65,7 @@ class App extends React.Component {
           onClickHandler={this.dataHandler}
           fileUploadHandler={this.fileUploadHandler}
         />
+        <div className='row'>{this.state.loaded ? <Titles data={this.state.headers}/> : null}</div>
         <Footer />
       </div>
     );

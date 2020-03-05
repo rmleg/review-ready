@@ -14,10 +14,16 @@ $secondary: $accent-blue;
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 .App {
-  text-align: center;
   font-family: $sans-serif;
+<<<<<<< HEAD
   background-color:	#D3D3D3;
   color: $blue;
+=======
+  font-weight: 900;
+  /* background-color: $blue;
+  color: $maize;
+  scrollbar-highlight-color: $accent-blue; */
+>>>>>>> cc5f9d277a26f696395e9f3035091d66ffbbe9c2
   font-size: $font-size;
   line-height: $line-height;
   font-weight: $font-weight;
