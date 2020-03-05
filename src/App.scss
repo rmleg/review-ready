@@ -1,8 +1,9 @@
 $maize: #ffcb05;
 $blue: #00274c;
 $accent-blue: #2f65a7;
+$sans-serif: "Montserrat", Arial, sans-serif;
 
 .App {
   text-align: center;
-  color: $blue;
+  font-family: $sans-serif;
 }
