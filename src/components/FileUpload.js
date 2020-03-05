@@ -1,21 +1,29 @@
 import React from "react";
 
-const onClickHandler = e => {
-  e.preventDefault();
-  const uploadedFile = document.getElementById('input').files[0];
 
-  console.log(uploadedFile)
-  
-};
 
-const FileUpload = () => {
-  return (
-    <form onSubmit={onClickHandler}>
-      <label htmlFor="file">Upload CSV</label>
-      <input type="file" id="input" />
-      <button type="submit">Upload</button>
-    </form>
-  );
+class FileUpload extends React.Component{
+  constructor(props) {
+    super(props);
+}
+
+  onClickHandler = event => {
+    event.preventDefault();
+    const uploadedFile = document.getElementById('input').files[0];
+    this.props.fileUploadHandler(uploadedFile)
+    console.log(uploadedFile)
+  };
+
+  render (){
+  return(
+    <form onSubmit={this.onClickHandler}>
+    <label htmlFor="file">Upload CSV</label>
+    <input type="file" id="input" />
+    <button type="submit">Upload</button>
+  </form>
+  )}
+    
+;
 };
 
 export default FileUpload;
