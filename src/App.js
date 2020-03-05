@@ -9,14 +9,15 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      headers: false,
       uploadedFile: false,
       error: false
     };
   }
 
-  dataHandler = (event) => {
+  dataHandler = event => {
     event.preventDefault();
-    this.onClickHandler().then(file=>{
+    this.onClickHandler().then(file => {
       if (file && file.type === "text/csv") {
         this.setState({
           uploadedFile: file,
@@ -28,42 +29,33 @@ class App extends React.Component {
           error: true
         });
       }
-    }
-    )
-  }
+    });
+  };
 
-  onClickHandler = async() => {
+  onClickHandler = async () => {
     const uploadedFile = document.getElementById("input").files[0];
-    return uploadedFile
+    return uploadedFile;
   };
 
   csvToJSON = () => {
     //console.log(this.state.uploadedFile);
     const config = {
-      complete: results => console.log(results)
+      complete: results => {
+        this.setState({ headers: results.meta.fields });
+        console.log(results);
+      },
+      header: true
     };
     Papa.parse(this.state.uploadedFile, config);
-  };
-
-  fileUploadHandler = file => {
-    if (file && file.type === "text/csv") {
-      this.setState({
-        uploadedFile: file,
-        error: false
-      });
-      this.csvToJSON();
-    } else {
-      this.setState({
-        error: true
-      });
-    }
   };
 
   render() {
     return (
       <div className="App">
         <Header />
-        {this.state.error ? <p>Upload a valid CSV file.</p> : null}
+        {this.state.error ? (
+          <span className="error">Upload a valid CSV file.</span>
+        ) : null}
         <FileUpload
           onClickHandler={this.dataHandler}
           fileUploadHandler={this.fileUploadHandler}
