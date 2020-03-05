@@ -12,6 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedTitles: false,
       data: false,
       headers: false,
       loaded: false,
@@ -19,6 +20,12 @@ class App extends React.Component {
       error: false
     };
   }
+
+  changeSelectedTitles = titles => {
+    this.setState({
+      selectedTitles: titles
+    });
+  };
 
   dataHandler = event => {
     event.preventDefault();
@@ -73,6 +80,14 @@ class App extends React.Component {
             <SelectColumns
               headers={this.state.headers}
               data={this.state.data[1]}
+            />
+          ) : null}
+        </div>
+        <div className="row">
+          {this.state.loaded ? (
+            <Titles
+              data={this.state.headers}
+              changeSelectedTitles={() => this.changeSelectedTitles()}
             />
           ) : null}
         </div>
