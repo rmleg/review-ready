@@ -3,6 +3,11 @@ $blue: #00274c;
 $accent-blue: #2f65a7;
 $sans-serif: "Montserrat", Arial, sans-serif;
 
+$info: $maize;
+
+// Bootstrap and its default variables
+@import "../node_modules/bootstrap/scss/bootstrap";
+
 .App {
   text-align: center;
   font-family: $sans-serif;
