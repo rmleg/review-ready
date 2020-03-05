@@ -2,34 +2,33 @@ import React from "react";
 
 const selectedTitles = new Set();
 
-const clickHandler = (index) => {
-    console.log(index)
-    if(selectedTitles.has(index)){
-        selectedTitles.delete(index)
+const clickHandler = (data) => {
+    if(selectedTitles.has(data.info.key)){
+        selectedTitles.delete(data.info.key)
     }else{
-        selectedTitles.add(index)
+        selectedTitles.add(data.info.key)
     }
-
     console.log(selectedTitles)
 }
 
 const Title = (props) =>{
+
     return(
         <>
-            <li><input type="checkbox" onClick={()=>clickHandler(props.info.key)}/> {props.info.header}</li>
+            <li><input type="checkbox" onClick={()=>clickHandler(props)}/> {props.info.header}</li>
         </>
     )
 }
 
 const Titles = (props) => {
 const data=[]
-const keys =[];
 
 for (let index = 0; index < props.data.length; index++) {
     const headerValue = props.data[index];
     data.push({
         key: index,
-        header: headerValue
+        header: headerValue,
+
     })
     
 }

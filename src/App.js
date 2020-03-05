@@ -11,12 +11,19 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedTitles: false,
       data: false,
       headers: false,
       loaded: false,
       uploadedFile: false,
       error: false
     };
+  }
+
+  changeSelectedTitles = titles =>{
+    this.setState({
+      selectedTitles: titles
+    })
   }
 
   dataHandler = event => {
@@ -65,7 +72,7 @@ class App extends React.Component {
           onClickHandler={this.dataHandler}
           fileUploadHandler={this.fileUploadHandler}
         />
-        <div className='row'>{this.state.loaded ? <Titles data={this.state.headers}/> : null}</div>
+        <div className='row'>{this.state.loaded ? <Titles data={this.state.headers} changeSelectedTitles={()=>this.changeSelectedTitles()}/> : null}</div>
         <Footer />
       </div>
     );
