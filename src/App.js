@@ -44,19 +44,19 @@ class App extends React.Component {
     Papa.parse(this.state.uploadedFile, config);
   };
 
-  fileUploadHandler = file => {
-    if (file && file.type === "text/csv") {
-      this.setState({
-        uploadedFile: file,
-        error: false
-      });
-      this.csvToJSON();
-    } else {
-      this.setState({
-        error: true
-      });
-    }
-  };
+  // fileUploadHandler = file => {
+  //   if (file && file.type === "text/csv") {
+  //     this.setState({
+  //       uploadedFile: file,
+  //       error: false
+  //     });
+  //     this.csvToJSON();
+  //   } else {
+  //     this.setState({
+  //       error: true
+  //     });
+  //   }
+  // };
 
   render() {
     return (
