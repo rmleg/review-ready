@@ -14,7 +14,7 @@ class App extends React.Component {
       headers: false,
       loaded: false,
       uploadedFile: false,
-      error: false,
+      error: false
     };
   }
 
@@ -57,7 +57,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App container">
         <Header />
         {this.state.error ? <p>Upload a valid CSV file.</p> : null}
         <FileUpload
