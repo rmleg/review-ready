@@ -1,18 +1,21 @@
 import React from "react";
 
 const onClickHandler = e => {
-  console.log("Click Handler.");
   e.preventDefault();
+  const uploadedFile = document.getElementById('input').files[0];
+
+  console.log(uploadedFile)
+  
 };
 
-const UploadBar = () => {
+const FileUpload = () => {
   return (
     <form onSubmit={onClickHandler}>
       <label htmlFor="file">Upload CSV</label>
-      <input type="file" name="file" />
+      <input type="file" id="input" />
       <button type="submit">Upload</button>
     </form>
   );
 };
 
-export default UploadBar;
+export default FileUpload;
