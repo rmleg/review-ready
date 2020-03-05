@@ -2,8 +2,32 @@ $maize: #ffcb05;
 $blue: #00274c;
 $accent-blue: #2f65a7;
 $sans-serif: "Montserrat", Arial, sans-serif;
+$font-size: 25px;
+$line-height: 35px;
 
 .App {
   text-align: center;
   font-family: $sans-serif;
+  background-color: $blue;
+  color: $maize;
+  scrollbar-highlight-color: $accent-blue;
+  font-size: $font-size;
+  line-height: $line-height;
+}
+
+div {
+  border: solid 5px $maize;
+  margin: 0 auto;
+  padding: 10px 12px;
+}
+
+button {
+  background-color: $accent-blue;
+  border: none;
+  color: white;
+  padding: 5px 11px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 25px;
 }
