@@ -41,8 +41,8 @@ class App extends React.Component {
     //console.log(this.state.uploadedFile);
     const config = {
       complete: results => {
-        this.setState({headers:results.meta.fields})
-        console.log(results)
+        this.setState({ headers: results.meta.fields });
+        console.log(results);
       },
       header: true
     };
