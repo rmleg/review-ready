@@ -9,9 +9,10 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      data: false,
       headers: false,
       uploadedFile: false,
-      error: false
+      error: false,
     };
   }
 
@@ -41,8 +42,14 @@ class App extends React.Component {
     //console.log(this.state.uploadedFile);
     const config = {
       complete: results => {
-        this.setState({ headers: results.meta.fields });
-        console.log(results);
+        this.setState({headers:results.meta.fields})
+        const userData = [];
+        results.data.forEach(data => {
+          userData.push(data)
+          this.setState({data:userData})
+        });
+        console.log(userData)
+        console.log(results)
       },
       header: true
     };
@@ -53,9 +60,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header />
-        {this.state.error ? (
-          <span className="error">Upload a valid CSV file.</span>
-        ) : null}
+        {this.state.error ? <p>Upload a valid CSV file.</p> : null}
         <FileUpload
           onClickHandler={this.dataHandler}
           fileUploadHandler={this.fileUploadHandler}
