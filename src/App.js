@@ -14,9 +14,9 @@ class App extends React.Component {
     };
   }
 
-  dataHandler = (event) => {
+  dataHandler = event => {
     event.preventDefault();
-    this.onClickHandler().then(file=>{
+    this.onClickHandler().then(file => {
       if (file && file.type === "text/csv") {
         this.setState({
           uploadedFile: file,
@@ -28,13 +28,12 @@ class App extends React.Component {
           error: true
         });
       }
-    }
-    )
-  }
+    });
+  };
 
-  onClickHandler = async() => {
+  onClickHandler = async () => {
     const uploadedFile = document.getElementById("input").files[0];
-    return uploadedFile
+    return uploadedFile;
   };
 
   csvToJSON = () => {
