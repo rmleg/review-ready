@@ -62,7 +62,9 @@ class App extends React.Component {
     return (
       <div className="App">
         <Header />
-        {this.state.error ? <p>Upload a valid CSV file.</p> : null}
+        {this.state.error ? (
+          <span className="error">Upload a valid CSV file.</span>
+        ) : null}
         <FileUpload
           onClickHandler={this.dataHandler}
           fileUploadHandler={this.fileUploadHandler}
