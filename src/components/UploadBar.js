@@ -1,7 +1,7 @@
 import React from "react";
 
 const onClickHandler = e => {
-  console.log("Click Handler");
+  console.log("Click Handler.");
   e.preventDefault();
 };
 
