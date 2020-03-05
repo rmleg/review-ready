@@ -1,6 +1,6 @@
-import React from 'react';
-import UploadBar from './components/UploadBar'
-import './App.css';
+import React from "react";
+import UploadBar from "./components/UploadBar";
+import "./App.scss";
 
 function App() {
   return (
