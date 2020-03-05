@@ -14,14 +14,31 @@ class App extends React.Component {
     };
   }
 
-  onClickHandler = event => {
+  dataHandler = (event) => {
     event.preventDefault();
+    this.onClickHandler().then(file=>{
+      if (file && file.type === "text/csv") {
+        this.setState({
+          uploadedFile: file,
+          error: false
+        });
+        this.csvToJSON();
+      } else {
+        this.setState({
+          error: true
+        });
+      }
+    }
+    )
+  }
+
+  onClickHandler = async() => {
     const uploadedFile = document.getElementById("input").files[0];
-    this.fileUploadHandler(uploadedFile);
+    return uploadedFile
   };
 
   csvToJSON = () => {
-    console.log(this.state.uploadedFile);
+    //console.log(this.state.uploadedFile);
     const config = {
       complete: results => console.log(results)
     };
@@ -48,7 +65,7 @@ class App extends React.Component {
         <Header />
         {this.state.error ? <p>Upload a valid CSV file.</p> : null}
         <FileUpload
-          onClickHandler={this.onClickHandler}
+          onClickHandler={this.dataHandler}
           fileUploadHandler={this.fileUploadHandler}
         />
         <Footer />
