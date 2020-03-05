@@ -1,11 +1,11 @@
 import React from 'react';
-import UploadBar from './components/UploadBar'
+import FileUpload from './components/FileUpload'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <UploadBar />
+      <FileUpload />
     </div>
   );
 }

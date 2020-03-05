@@ -8,7 +8,7 @@ const onClickHandler = e => {
   
 };
 
-const UploadBar = () => {
+const FileUpload = () => {
   return (
     <form onSubmit={onClickHandler}>
       <label htmlFor="file">Upload CSV</label>
@@ -18,4 +18,4 @@ const UploadBar = () => {
   );
 };
 
-export default UploadBar;
+export default FileUpload;
