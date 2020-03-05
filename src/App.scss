@@ -4,6 +4,7 @@ $accent-blue: #2f65a7;
 $sans-serif: "Montserrat", Arial, sans-serif;
 $font-size: 1rem;
 $line-height: 1.5rem;
+$font-weight: 900;
 
 $info: $maize;
 $primary: $blue;
@@ -15,15 +16,9 @@ $secondary: $accent-blue;
 .App {
   text-align: center;
   font-family: $sans-serif;
-  /* background-color: $blue;
-  color: $maize;
-  scrollbar-highlight-color: $accent-blue; */
+  background-color:	#D3D3D3;
+  color: $blue;
   font-size: $font-size;
   line-height: $line-height;
+  font-weight: $font-weight;
 }
-
-/* div {
-  border: solid 5px $maize;
-  margin: 0 auto;
-  padding: 10px 12px;
-} */
