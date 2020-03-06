@@ -13,7 +13,14 @@ const Data = props => {
 
   let returnData = dataArray.map((obj, index) => {
     let key = Object.keys(obj)[0];
-    return <DataRow header={key} data={obj[key]} id={index} />;
+    return (
+      <DataRow
+        header={key}
+        data={obj[key]}
+        id={index}
+        clickColumnHandler={props.clickColumnHandler}
+      />
+    );
   });
   return returnData;
 };

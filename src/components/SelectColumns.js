@@ -28,11 +28,15 @@ const SelectColumns = props => {
         <thead>
           <tr>
             <th scope="col">Column</th>
-            <th scope="col">Sample Data</th>
+            <th scope="col">First Row of Data</th>
           </tr>
         </thead>
         <tbody>
-          <Data headers={props.headers} data={props.data} />
+          <Data
+            headers={props.headers}
+            data={props.data}
+            clickColumnHandler={props.clickColumnHandler}
+          />
         </tbody>
       </table>
     </>

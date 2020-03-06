@@ -17,7 +17,8 @@ class App extends React.Component {
       headers: false,
       loaded: false,
       uploadedFile: false,
-      error: false
+      error: false,
+      selectedColumns: new Set()
     };
   }
 
@@ -27,6 +28,22 @@ class App extends React.Component {
       loaded: false,
       uploadedFile: false
     });
+  };
+
+  clickColumnHandler = id => {
+    let newSet = new Set(this.state.selectedColumns);
+    if (newSet.has(id)) {
+      newSet.delete(id);
+    } else {
+      console.log("adding");
+      newSet.add(id);
+    }
+    this.setState({
+      selectedColumns: newSet
+    });
+    console.log(newSet);
+    console.log(this.state.selectedColumns);
+    console.log(id);
   };
 
   changeSelectedTitles = titles => {
@@ -90,6 +107,7 @@ class App extends React.Component {
               headers={this.state.headers}
               data={this.state.data[1]}
               handleBackClick={this.handleBackClick}
+              clickColumnHandler={this.clickColumnHandler}
             />
           ) : null}
         </div>
