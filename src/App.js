@@ -8,6 +8,7 @@ import SelectColumns from "./components/SelectColumns";
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import { Button } from "reactstrap";
 import { saveAs } from "file-saver";
+import Choices from "./components/Choices";
 
 class App extends React.Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class App extends React.Component {
       loaded: false,
       uploadedFile: false,
       error: false,
-      selectedColumns: new Set()
+      selectedColumns: new Set(),
+      choiceMade: false
     };
   }
 
@@ -52,7 +54,6 @@ class App extends React.Component {
         }
       });
       docContents.push(newContents);
-      console.log(docContents);
     });
     doc.addSection({
       properties: {},
@@ -179,11 +180,23 @@ class App extends React.Component {
     Papa.parse(this.state.uploadedFile, config);
   };
 
+  choicesClick = choice => {
+    this.setState({
+      choiceMade: choice
+    });
+  };
+
   render() {
     return (
       <div className="App container-fluid">
         <Header />
-        {this.state.loaded ? null : (
+        {this.state.loaded ? (
+          <Choices
+            onClick={this.choicesClick}
+            onDocsClick={this.createDoc}
+            firstCandidateData={this.state.data[1]}
+          />
+        ) : (
           <FileUpload
             onClickHandler={this.dataHandler}
             fileUploadHandler={this.fileUploadHandler}
@@ -191,11 +204,8 @@ class App extends React.Component {
           />
         )}
         <div className="row p-5">
-          {this.state.loaded ? (
+          {this.state.loaded && this.state.choiceMade == "columns" ? (
             <>
-              <Button onClick={() => this.createDoc(this.state.data[1])}>
-                Doc
-              </Button>
               <SelectColumns
                 name={this.state.uploadedFile.name}
                 headers={this.state.headers}
