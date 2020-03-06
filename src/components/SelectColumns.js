@@ -1,6 +1,7 @@
 import React from "react";
 import Data from "./Data";
 import BackButton from "./BackButton";
+import { Button } from "reactstrap";
 
 const SelectColumns = props => {
   /* let output = props.data.map(title => {
@@ -24,6 +25,12 @@ const SelectColumns = props => {
       <h3 className="mb-3">
         Select columns from '{props.name}' to include in export
       </h3>
+      <div className="mb-3">
+        <Button color="info" onClick={props.clickExportHandler}>
+          &darr; Download CSV with selections
+        </Button>
+      </div>
+
       <table className="table table-striped">
         <thead>
           <tr>

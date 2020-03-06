@@ -4,8 +4,6 @@ import "./App.scss";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Papa from "papaparse";
-import Applicant from "./components/Applicant";
-import Titles from "./components/Titles";
 import SelectColumns from "./components/SelectColumns";
 
 class App extends React.Component {
@@ -41,9 +39,48 @@ class App extends React.Component {
     this.setState({
       selectedColumns: newSet
     });
-    console.log(newSet);
+    /* console.log(newSet);
     console.log(this.state.selectedColumns);
-    console.log(id);
+    console.log(id); */
+  };
+
+  downloadFile = (filename, csv) => {
+    let element = document.createElement("a");
+    element.setAttribute(
+      "href",
+      "data:text/plain;charset=utf-8," + encodeURIComponent(csv)
+    );
+    element.setAttribute("download", filename);
+
+    element.style.display = "none";
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  };
+
+  updateJSON = () => {
+    //sort column keys to maintain order of imported data
+    const sortedSelectors = Array.from(this.state.selectedColumns).sort();
+    //initialize empty array to hold results
+    let allEditedData = [];
+    //Loop through all file data
+    //For each item in the array of arrays, loop through that array
+    this.state.data.forEach(innerArray => {
+      //initialize empty array to hold edited data
+      let newArr = [];
+      for (let i = 0; i < sortedSelectors.length; i++) {
+        //get thing at each sortedSelectors[i] and add it to newArr
+        let index = sortedSelectors[i];
+        newArr.push(innerArray[index]);
+      }
+      //add newArr to edited data
+      allEditedData.push(newArr);
+    });
+    const newCSV = Papa.unparse(allEditedData);
+    const newName = `Review_Ready_${this.state.uploadedFile.name}`;
+    this.downloadFile(newName, newCSV);
   };
 
   changeSelectedTitles = titles => {
@@ -108,14 +145,7 @@ class App extends React.Component {
               data={this.state.data[1]}
               handleBackClick={this.handleBackClick}
               clickColumnHandler={this.clickColumnHandler}
-            />
-          ) : null}
-        </div>
-        <div className="row">
-          {this.state.loaded ? (
-            <Titles
-              data={this.state.headers}
-              changeSelectedTitles={() => this.changeSelectedTitles()}
+              clickExportHandler={this.updateJSON}
             />
           ) : null}
         </div>
