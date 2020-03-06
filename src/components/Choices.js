@@ -15,7 +15,7 @@ const Choices = props => {
         className="m-3"
         onClick={() => props.onDocsClick(props.firstCandidateData)}
       >
-        Download Candidate Documents
+        Download Candidate Documents (with all columns)
       </Button>
     </div>
   );
