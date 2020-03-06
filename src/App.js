@@ -30,11 +30,11 @@ class App extends React.Component {
 
   clickColumnHandler = id => {
     let newSet = new Set(this.state.selectedColumns);
-    if (newSet.has(Number(id))) {
-      newSet.delete(Number(id));
+    if (newSet.has(id)) {
+      newSet.delete(id);
     } else {
       console.log("adding");
-      newSet.add(Number(id));
+      newSet.add(id);
     }
     this.setState({
       selectedColumns: newSet

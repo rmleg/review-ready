@@ -7,7 +7,7 @@ const DataRow = props => {
         <input
           type="checkbox"
           id={`header-${props.id}`}
-          onClick={() => props.clickColumnHandler(Number(props.id))}
+          onClick={() => props.clickColumnHandler(props.id)}
         />{" "}
         <label htmlFor={`header-${props.id}`}>{props.header}</label>
       </td>

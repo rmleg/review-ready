@@ -14,6 +14,12 @@ $secondary: $accent-blue;
   font-family: $sans-serif;
 }
 
+.download {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
 footer {
   font-size: $font-size-sm;
 }

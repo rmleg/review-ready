@@ -11,8 +11,10 @@ const FileUpload = props => {
 
       <div className="col-md-6 col-12">
         <form onSubmit={props.onClickHandler}>
-          <div className="form-group">
-            <label htmlFor="file">Upload CSV</label>
+          <div className="form-group mt-3">
+            <label htmlFor="input" className="sr-only">
+              Upload CSV
+            </label>
             {props.error ? (
               <div>
                 <span className="alert-danger">
