@@ -203,7 +203,7 @@ class App extends React.Component {
           />
         )}
         <div className="row p-5">
-          {this.state.loaded && this.state.choiceMade == "columns" ? (
+          {this.state.loaded && this.state.choiceMade === "columns" ? (
             <>
               <SelectColumns
                 name={this.state.uploadedFile.name}
