@@ -6,7 +6,6 @@ import Footer from "./components/Footer";
 import Papa from "papaparse";
 import SelectColumns from "./components/SelectColumns";
 import { Document, Packer, Paragraph, TextRun } from "docx";
-import { Button } from "reactstrap";
 import { saveAs } from "file-saver";
 import Choices from "./components/Choices";
 
