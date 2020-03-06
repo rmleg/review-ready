@@ -5,6 +5,9 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Papa from "papaparse";
 import SelectColumns from "./components/SelectColumns";
+import { Document, Packer, Paragraph, TextRun } from "docx";
+import { Button } from "reactstrap";
+import { saveAs } from "file-saver";
 
 class App extends React.Component {
   constructor(props) {
@@ -20,6 +23,48 @@ class App extends React.Component {
     };
   }
 
+  createDoc = applicant => {
+    // Create document
+    const doc = new Document();
+    console.log(applicant);
+    let docContents = [];
+    // Documents contain sections, you can have multiple sections per document, go here to learn more about sections
+    // This simple example will only contain one section
+    applicant.forEach((item, index) => {
+      console.log(`adding for ${item} at ${index}`);
+      let newContents = new Paragraph({
+        children: [
+          new TextRun({
+            text: `${this.state.headers[index]}`,
+            bold: true
+          })
+        ]
+      });
+      docContents.push(newContents);
+      newContents = new Paragraph({
+        children: [
+          new TextRun({
+            text: `${item}`
+          })
+        ],
+        spacing: {
+          after: 240
+        }
+      });
+      docContents.push(newContents);
+      console.log(docContents);
+    });
+    doc.addSection({
+      properties: {},
+      children: docContents
+    });
+    Packer.toBlob(doc).then(blob => {
+      console.log(blob);
+      saveAs(blob, "example.docx");
+      console.log("Document created successfully");
+    });
+  };
+
   handleBackClick = () => {
     console.log("clicked");
     this.setState({
@@ -33,7 +78,6 @@ class App extends React.Component {
     if (newSet.has(id)) {
       newSet.delete(id);
     } else {
-      console.log("adding");
       newSet.add(id);
     }
     this.setState({
@@ -44,11 +88,11 @@ class App extends React.Component {
     console.log(id); */
   };
 
-  downloadFile = (filename, csv) => {
+  downloadFile = (filename, file) => {
     let element = document.createElement("a");
     element.setAttribute(
       "href",
-      "data:text/plain;charset=utf-8," + encodeURIComponent(csv)
+      "data:text/plain;charset=utf-8," + encodeURIComponent(file)
     );
     element.setAttribute("download", filename);
 
@@ -148,14 +192,19 @@ class App extends React.Component {
         )}
         <div className="row p-5">
           {this.state.loaded ? (
-            <SelectColumns
-              name={this.state.uploadedFile.name}
-              headers={this.state.headers}
-              data={this.state.data[1]}
-              handleBackClick={this.handleBackClick}
-              clickColumnHandler={this.clickColumnHandler}
-              clickExportHandler={this.updateJSON}
-            />
+            <>
+              <Button onClick={() => this.createDoc(this.state.data[1])}>
+                Doc
+              </Button>
+              <SelectColumns
+                name={this.state.uploadedFile.name}
+                headers={this.state.headers}
+                data={this.state.data[1]}
+                handleBackClick={this.handleBackClick}
+                clickColumnHandler={this.clickColumnHandler}
+                clickExportHandler={this.updateJSON}
+              />
+            </>
           ) : null}
         </div>
         <Footer />
