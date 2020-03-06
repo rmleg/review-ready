@@ -25,7 +25,7 @@ const SelectColumns = props => {
       <h3 className="mb-3">
         Select columns from '{props.name}' to include in export
       </h3>
-      <div className="mb-3">
+      <div className="mb-3 ml-3">
         <Button color="info" onClick={props.clickExportHandler}>
           &darr; Download CSV with selections
         </Button>

@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 
 const BackButton = props => {
   return (
-    <div className="mb-3">
+    <div className="mb-3 col-12">
       <Button color="info" onClick={props.handleBackClick}>
         &larr; Upload a Different File
       </Button>

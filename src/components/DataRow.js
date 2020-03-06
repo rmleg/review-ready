@@ -3,14 +3,15 @@ import React from "react";
 const DataRow = props => {
   return (
     <tr>
-      <td data-key={`header-${props.id}`}>
+      <td key={`header-${props.id}`}>
         <input
           type="checkbox"
-          onClick={() => props.clickColumnHandler(props.id)}
+          id={`header-${props.id}`}
+          onClick={() => props.clickColumnHandler(Number(props.id))}
         />{" "}
-        {props.header}
+        <label htmlFor={`header-${props.id}`}>{props.header}</label>
       </td>
-      <td data-key={`sample-${props.id}`}>{props.data}</td>
+      <td key={`sample-${props.id}`}>{props.data}</td>
     </tr>
   );
 };

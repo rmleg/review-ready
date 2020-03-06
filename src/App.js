@@ -30,11 +30,11 @@ class App extends React.Component {
 
   clickColumnHandler = id => {
     let newSet = new Set(this.state.selectedColumns);
-    if (newSet.has(id)) {
-      newSet.delete(id);
+    if (newSet.has(Number(id))) {
+      newSet.delete(Number(id));
     } else {
       console.log("adding");
-      newSet.add(id);
+      newSet.add(Number(id));
     }
     this.setState({
       selectedColumns: newSet
@@ -60,9 +60,18 @@ class App extends React.Component {
     document.body.removeChild(element);
   };
 
+  sorter = (a, b) => {
+    if (a < b) return -1; // any negative number works
+    if (a > b) return 1; // any positive number works
+    return 0; // equal values MUST yield zero
+  };
+
   updateJSON = () => {
     //sort column keys to maintain order of imported data
-    const sortedSelectors = Array.from(this.state.selectedColumns).sort();
+    const sortedSelectors = Array.from(this.state.selectedColumns).sort(
+      this.sorter
+    );
+    console.log(sortedSelectors);
     //initialize empty array to hold results
     let allEditedData = [];
     //Loop through all file data
