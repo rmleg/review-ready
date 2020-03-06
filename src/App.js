@@ -21,6 +21,14 @@ class App extends React.Component {
     };
   }
 
+  handleBackClick = () => {
+    console.log("clicked");
+    this.setState({
+      loaded: false,
+      uploadedFile: false
+    });
+  };
+
   changeSelectedTitles = titles => {
     this.setState({
       selectedTitles: titles
@@ -66,20 +74,22 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App container">
+      <div className="App container-fluid">
         <Header />
-        {this.state.error ? (
-          <span className="alert-danger">Upload a valid CSV file.</span>
-        ) : null}
-        <FileUpload
-          onClickHandler={this.dataHandler}
-          fileUploadHandler={this.fileUploadHandler}
-        />
-        <div className="row">
+        {this.state.loaded ? null : (
+          <FileUpload
+            onClickHandler={this.dataHandler}
+            fileUploadHandler={this.fileUploadHandler}
+            error={this.state.error}
+          />
+        )}
+        <div className="row p-5">
           {this.state.loaded ? (
             <SelectColumns
+              name={this.state.uploadedFile.name}
               headers={this.state.headers}
               data={this.state.data[1]}
+              handleBackClick={this.handleBackClick}
             />
           ) : null}
         </div>

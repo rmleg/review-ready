@@ -3,15 +3,31 @@ import { Button } from "reactstrap";
 
 const FileUpload = props => {
   return (
-    <form className="row" onSubmit={props.onClickHandler}>
-      <div className="form-group">
-        <label htmlFor="file">Upload CSV</label>
-        <input type="file" id="input" className="form-control-file" />
-        <Button color="info" type="submit">
-          Upload
-        </Button>
+    <div className="row p-5">
+      <div className="col-md-6 col-12">
+        <h1>Welcome to Review Ready</h1>
+        <p className="h3">Upload a CSV to Begin</p>
       </div>
-    </form>
+
+      <div className="col-md-6 col-12">
+        <form onSubmit={props.onClickHandler}>
+          <div className="form-group">
+            <label htmlFor="file">Upload CSV</label>
+            {props.error ? (
+              <div>
+                <span className="alert-danger">
+                  Please upload a valid CSV file.
+                </span>
+              </div>
+            ) : null}
+            <input type="file" id="input" className="form-control-file" />
+            <Button className="mt-3" color="info" type="submit">
+              Upload
+            </Button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 

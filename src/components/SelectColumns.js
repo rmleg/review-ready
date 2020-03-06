@@ -1,5 +1,6 @@
 import React from "react";
 import Data from "./Data";
+import BackButton from "./BackButton";
 
 const SelectColumns = props => {
   /* let output = props.data.map(title => {
@@ -18,17 +19,23 @@ const SelectColumns = props => {
   )); */
 
   return (
-    <table className="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Data Header</th>
-          <th scope="col">Sample Data</th>
-        </tr>
-      </thead>
-      <tbody>
-        <Data headers={props.headers} data={props.data} />
-      </tbody>
-    </table>
+    <>
+      <BackButton handleBackClick={props.handleBackClick} />
+      <h3 className="mb-3">
+        Select columns from '{props.name}' to include in export
+      </h3>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Column</th>
+            <th scope="col">Sample Data</th>
+          </tr>
+        </thead>
+        <tbody>
+          <Data headers={props.headers} data={props.data} />
+        </tbody>
+      </table>
+    </>
   );
 };
 
