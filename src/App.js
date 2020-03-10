@@ -9,10 +9,12 @@ import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from "file-saver";
 import Choices from "./components/Choices";
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectAll: false,
       selectedTitles: false,
       data: false,
       headers: false,
@@ -72,6 +74,13 @@ class App extends React.Component {
       uploadedFile: false
     });
   };
+
+  checkAll = () => {
+    const inputs = document.querySelectorAll('.selector-checkbox');
+    for (let index = 0; index < inputs.length; index++) {
+      inputs[index].checked = true;
+    }
+  }
 
   clickColumnHandler = id => {
     let newSet = new Set(this.state.selectedColumns);
@@ -185,6 +194,36 @@ class App extends React.Component {
     });
   };
 
+  clickSelectAllHandler = () => {
+    const returnSet = new Set();
+    if (this.state.selectAll) {
+      this.setState({
+        selectAll: false
+      })
+      returnSet.clear();
+      this.unCheckAll();
+    } else {
+      for (let index = 0; index < this.state.headers.length; index++) {
+        returnSet.add(index)
+      }
+      this.setState({
+        selectAll: true,
+      })
+
+      this.checkAll();
+    }
+    this.setState({
+      selectedColumns: returnSet
+    })
+  }
+
+  unCheckAll = () => {
+    const inputs = document.querySelectorAll('.selector-checkbox');
+    for (let index = 0; index < inputs.length; index++) {
+      inputs[index].checked = false;
+    }
+  }
+
   render() {
     return (
       <div className="App container-fluid">
@@ -196,12 +235,12 @@ class App extends React.Component {
             firstCandidateData={this.state.data[1]}
           />
         ) : (
-          <FileUpload
-            onClickHandler={this.dataHandler}
-            fileUploadHandler={this.fileUploadHandler}
-            error={this.state.error}
-          />
-        )}
+            <FileUpload
+              onClickHandler={this.dataHandler}
+              fileUploadHandler={this.fileUploadHandler}
+              error={this.state.error}
+            />
+          )}
         <div className="row p-5">
           {this.state.loaded && this.state.choiceMade === "columns" ? (
             <>
@@ -212,6 +251,8 @@ class App extends React.Component {
                 handleBackClick={this.handleBackClick}
                 clickColumnHandler={this.clickColumnHandler}
                 clickExportHandler={this.updateJSON}
+                clickSelectAllHandler={this.clickSelectAllHandler}
+                selectAll={this.state.selectAll}
               />
             </>
           ) : null}

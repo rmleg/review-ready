@@ -6,6 +6,7 @@ const DataRow = props => {
       <td key={`header-${props.id}`}>
         <input
           type="checkbox"
+          className="selector-checkbox"
           id={`header-${props.id}`}
           onClick={() => props.clickColumnHandler(props.id)}
         />{" "}

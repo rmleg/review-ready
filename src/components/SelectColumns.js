@@ -22,7 +22,7 @@ const SelectColumns = props => {
   return (
     <>
       <BackButton handleBackClick={props.handleBackClick} />
-      <h3 className="mb-3">
+      <h3 className="mb-3 col-md-12">
         Select columns from '{props.name}' to include in export
       </h3>
       <div className="mb-3 ml-3 download">
@@ -30,6 +30,10 @@ const SelectColumns = props => {
           &darr; Download CSV with selections
         </Button>
       </div>
+
+      <div className="col-md-12 mb-3"><Button color="info" onClick={props.clickSelectAllHandler}>
+        {props.selectAll ? "Unselect All" : "Select All"}
+      </Button></div>
 
       <table className="table table-striped">
         <thead>
