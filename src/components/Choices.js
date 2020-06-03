@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "reactstrap";
 
-const Choices = props => {
+const Choices = (props) => {
   return (
     <div className="col-md-6 mx-auto text-center">
       <Button
@@ -13,7 +13,7 @@ const Choices = props => {
       </Button>
       <Button
         className="m-3"
-        onClick={() => props.onDocsClick(props.firstCandidateData)}
+        onClick={() => props.onDocsClick(props.candidateData)}
       >
         Download Candidate Documents (with all columns)
       </Button>

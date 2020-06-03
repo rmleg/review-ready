@@ -7,8 +7,8 @@ import Papa from "papaparse";
 import SelectColumns from "./components/SelectColumns";
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import { saveAs } from "file-saver";
+import JSZip from "jszip";
 import Choices from "./components/Choices";
-
 
 class App extends React.Component {
   constructor(props) {
@@ -22,67 +22,79 @@ class App extends React.Component {
       uploadedFile: false,
       error: false,
       selectedColumns: new Set(),
-      choiceMade: false
+      choiceMade: false,
     };
   }
 
-  createDoc = applicant => {
-    // Create document
-    const doc = new Document();
-    console.log(applicant);
-    let docContents = [];
-    // Documents contain sections, you can have multiple sections per document, go here to learn more about sections
-    // This simple example will only contain one section
-    applicant.forEach((item, index) => {
-      console.log(`adding for ${item} at ${index}`);
-      let newContents = new Paragraph({
-        children: [
-          new TextRun({
-            text: `${this.state.headers[index]}`,
-            bold: true
-          })
-        ]
+  createZip = async (applicants) => {
+    let zip = await this.createDocs(applicants);
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      // see FileSaver.js
+      console.log("downloading zip");
+      const date = new Date();
+      let name = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+      name += `-${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+      saveAs(content, name);
+    });
+  };
+
+  createDocs = async (applicants) => {
+    let zip = new JSZip();
+    for (let i = 1; i < applicants.length; i++) {
+      //start at 1 because 0 is the headers
+      // Create document
+      const doc = new Document();
+      let docContents = [];
+      applicants[i].forEach((item, index) => {
+        console.log(`adding for ${item} at ${index}`);
+        let newContents = new Paragraph({
+          children: [
+            new TextRun({
+              text: `${this.state.headers[index]}`,
+              bold: true,
+            }),
+          ],
+        });
+        docContents.push(newContents);
+        newContents = new Paragraph({
+          children: [
+            new TextRun({
+              text: `${item}`,
+            }),
+          ],
+          spacing: {
+            after: 240,
+          },
+        });
+        docContents.push(newContents);
       });
-      docContents.push(newContents);
-      newContents = new Paragraph({
-        children: [
-          new TextRun({
-            text: `${item}`
-          })
-        ],
-        spacing: {
-          after: 240
-        }
+      doc.addSection({
+        properties: {},
+        children: docContents,
       });
-      docContents.push(newContents);
-    });
-    doc.addSection({
-      properties: {},
-      children: docContents
-    });
-    Packer.toBlob(doc).then(blob => {
-      console.log(blob);
-      saveAs(blob, "example.docx");
-      console.log("Document created successfully");
-    });
+      await Packer.toBlob(doc).then((blob) => {
+        zip.file(`${applicants[i][0]}.docx`, blob);
+      });
+    }
+    return zip;
   };
 
   handleBackClick = () => {
     console.log("clicked");
     this.setState({
       loaded: false,
-      uploadedFile: false
+      uploadedFile: false,
     });
   };
 
   checkAll = () => {
-    const inputs = document.querySelectorAll('.selector-checkbox');
+    const inputs = document.querySelectorAll(".selector-checkbox");
     for (let index = 0; index < inputs.length; index++) {
       inputs[index].checked = true;
     }
-  }
+  };
 
-  clickColumnHandler = id => {
+  clickColumnHandler = (id) => {
     let newSet = new Set(this.state.selectedColumns);
     if (newSet.has(id)) {
       newSet.delete(id);
@@ -90,7 +102,7 @@ class App extends React.Component {
       newSet.add(id);
     }
     this.setState({
-      selectedColumns: newSet
+      selectedColumns: newSet,
     });
     /* console.log(newSet);
     console.log(this.state.selectedColumns);
@@ -129,7 +141,7 @@ class App extends React.Component {
     let allEditedData = [];
     //Loop through all file data
     //For each item in the array of arrays, loop through that array
-    this.state.data.forEach(innerArray => {
+    this.state.data.forEach((innerArray) => {
       //initialize empty array to hold edited data
       let newArr = [];
       for (let i = 0; i < sortedSelectors.length; i++) {
@@ -145,24 +157,24 @@ class App extends React.Component {
     this.downloadFile(newName, newCSV);
   };
 
-  changeSelectedTitles = titles => {
+  changeSelectedTitles = (titles) => {
     this.setState({
-      selectedTitles: titles
+      selectedTitles: titles,
     });
   };
 
-  dataHandler = event => {
+  dataHandler = (event) => {
     event.preventDefault();
-    this.onClickHandler().then(file => {
+    this.onClickHandler().then((file) => {
       if (file && file.type === "text/csv") {
         this.setState({
           uploadedFile: file,
-          error: false
+          error: false,
         });
         this.csvToJSON();
       } else {
         this.setState({
-          error: true
+          error: true,
         });
       }
     });
@@ -175,22 +187,22 @@ class App extends React.Component {
 
   csvToJSON = () => {
     const config = {
-      complete: results => {
+      complete: (results) => {
         this.setState({ headers: results.data[0] });
         let userData = [];
-        results.data.forEach(data => {
+        results.data.forEach((data) => {
           userData.push(data);
         });
         this.setState({ data: userData, loaded: true });
       },
-      header: false
+      header: false,
     };
     Papa.parse(this.state.uploadedFile, config);
   };
 
-  choicesClick = choice => {
+  choicesClick = (choice) => {
     this.setState({
-      choiceMade: choice
+      choiceMade: choice,
     });
   };
 
@@ -198,31 +210,31 @@ class App extends React.Component {
     const returnSet = new Set();
     if (this.state.selectAll) {
       this.setState({
-        selectAll: false
-      })
+        selectAll: false,
+      });
       returnSet.clear();
       this.unCheckAll();
     } else {
       for (let index = 0; index < this.state.headers.length; index++) {
-        returnSet.add(index)
+        returnSet.add(index);
       }
       this.setState({
         selectAll: true,
-      })
+      });
 
       this.checkAll();
     }
     this.setState({
-      selectedColumns: returnSet
-    })
-  }
+      selectedColumns: returnSet,
+    });
+  };
 
   unCheckAll = () => {
-    const inputs = document.querySelectorAll('.selector-checkbox');
+    const inputs = document.querySelectorAll(".selector-checkbox");
     for (let index = 0; index < inputs.length; index++) {
       inputs[index].checked = false;
     }
-  }
+  };
 
   render() {
     return (
@@ -231,16 +243,16 @@ class App extends React.Component {
         {this.state.loaded ? (
           <Choices
             onClick={this.choicesClick}
-            onDocsClick={this.createDoc}
-            firstCandidateData={this.state.data[1]}
+            onDocsClick={this.createZip}
+            candidateData={this.state.data}
           />
         ) : (
-            <FileUpload
-              onClickHandler={this.dataHandler}
-              fileUploadHandler={this.fileUploadHandler}
-              error={this.state.error}
-            />
-          )}
+          <FileUpload
+            onClickHandler={this.dataHandler}
+            fileUploadHandler={this.fileUploadHandler}
+            error={this.state.error}
+          />
+        )}
         <div className="row p-5">
           {this.state.loaded && this.state.choiceMade === "columns" ? (
             <>
