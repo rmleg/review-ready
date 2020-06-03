@@ -1,0 +1,25 @@
+$maize: #ffcb05;
+$blue: #00274c;
+$accent-blue: #2f65a7;
+$sans-serif: "Montserrat", Arial, sans-serif;
+
+$info: $maize;
+$primary: $blue;
+$secondary: $accent-blue;
+
+// Bootstrap and its default variables
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+.App {
+  font-family: $sans-serif;
+}
+
+.download {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+footer {
+  font-size: $font-size-sm;
+}
