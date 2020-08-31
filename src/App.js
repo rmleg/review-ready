@@ -46,7 +46,6 @@ class App extends React.Component {
       const doc = new Document();
       let docContents = [];
       applicants[i].forEach((item, index) => {
-        console.log(`adding for ${item} at ${index}`);
         let newContents = new Paragraph({
           children: [
             new TextRun({
