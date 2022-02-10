@@ -11,7 +11,7 @@
     "docx": "^5.0.2",
     "file-saver": "^2.0.2",
     "gh-pages": "^3.0.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "papaparse": "^5.1.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
